@@ -50,5 +50,5 @@ Worker 실행
 -----
 
 1. 워커 실행
-<pre><code>python3 [파이썬 파일] --url [서버 URL 주소]</code></pre>
-<pre><code>python3 [파이썬 파일] --url redis://[ip 주소]:[포트 번호]/[DB 번호]</code></pre>
+<pre><code>rq worker --url [서버 URL 주소]</code></pre>
+<pre><code>rq worker --url redis://[ip 주소]:[포트 번호]/[DB 번호]</code></pre>
