@@ -7,7 +7,7 @@
 2. pip3 설치
 3. redis-server 설치
 4. redis, rq 설치
-
+5. 또는 docker로 실행
 
 서버 준비
 -----
