@@ -1,0 +1,9 @@
+def main:
+  input_file=open(sys.argv[1],'r',encoding="utf-8")
+  input_csv=csv.reader(input_file)
+  download_q=Queue()
+  upload_q=Queue()
+  for entry in input_csv:
+    download_q.put((entry[0],entry[1]))
+
+  download_p=Process(target=download,args(download_q,upload_q))
