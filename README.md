@@ -30,7 +30,7 @@
 
 1. redis-cli 실행
 2. 테이블 확인
-<pre><code>KEYS '\*'</code></pre>
+<pre><code>KEYS '[검색할 것]'</code></pre>
 3. 큐 모든 job 삭제
 <pre><code>FLUSHALL</code></pre>
 4. 상태 저장
