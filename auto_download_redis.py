@@ -4,6 +4,8 @@ import sys
 import csv
 from redis import Redis
 from rq import Connection, Queue
+#download_job_showbox에서 함수 import
+#다른 다운로드 함수가 필요하면 import 문 수정
 from download_job_showbox import download
 from rq.job import Job
 import time
