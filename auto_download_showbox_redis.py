@@ -4,7 +4,7 @@ import sys
 import csv
 from redis import Redis
 from rq import Connection, Queue
-from download_job import download
+from download_job_showbox import download
 from rq.job import Job
 import time
 
@@ -23,7 +23,7 @@ if __name__ == '__main__':
         link=entry[0]
         filename=entry[1]
         job=download_q.enqueue(download,entry,job_timeout=10800)
-        job_list.append(job.id)
+        job_list.append((job.id,"queued"))
 
     done=False
     while not done:
@@ -33,15 +33,19 @@ if __name__ == '__main__':
         writer=csv.writer(output_csv)
         i=0
         for entry in reader:
-            job_id=job_list[i]
-            job=Job.fetch(job_id,connection=Redis())
-            status=job.get_status()
-            writer.writerow([entry[0],entry[1],status])
-            i+=1
-            if status == "finished":
+            job_id=job_list[i][0]
+            job_status=job_list[i][1]
+            if job_status=="finished":
+                writer.writerow([entry[0],entry[1],job_status])
                 done=True
-            elif status == "failed":
+            elif job_status=="failed":
+                writer.writerow([entry[0],entry[1],job_status])
                 done=True
             else:
+                job=Job.fetch(job_id,connection=Redis())
+                current_status=job.get_status()
+                writer.writerow([entry[0],entry[1],current_status])
+                job_list[i]=(job_id,current_status)
                 done=False
+            i+=1
         time.sleep(60)
