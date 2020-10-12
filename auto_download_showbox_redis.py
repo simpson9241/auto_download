@@ -41,17 +41,30 @@ if __name__ == '__main__':
         #job_list에 생성된 Job의 ID와 큐에 추가되었다는 뜻의 메시지를 한 Tuple로 job_list에 추가
         job_list.append((job.id,"queued"))
 
-    
+    #다운로드 큐에 들어있던 Job이 모두 끝나고 프로그램이 종료되도 된다는 신호를 주는 Flag 생성
     done=False
+
+    #프로그램이 종료될 때까지 큐의 진행상황을 output CSV 파일에 업데이트 시켜주는 코드
+    #while 문은 60초 마다 반복
     while not done:
+        #input CSV 파일을 읽어들임
         input_csv=open(sys.argv[1],'r',encoding="utf-8")
         reader=csv.reader(input_csv)
+
+        #output CSV 파일을 생성하고 CSV 파일을 작성해주는 writer 변수 생성
+        #여러번 생성되면 있던 CSV 파일에 그대로 덮어씌워지므로 CSV 파일이 업데이트되는 것과 같은 효과를 보여줌
         output_csv=open(output_name,'w',encoding='utf-8')
         writer=csv.writer(output_csv)
+
+        #job list의 인덱스 생성
         i=0
         for entry in reader:
             job_id=job_list[i][0]
             job_status=job_list[i][1]
+
+            #job_status가 finished 이거나 failed 이면 큐에서 Job id로 Job을 호출하지 않고 CSV 파일에 기존 내용을 그대로 작성
+            #그렇지 않은 경우 job list에 저장되어 있던 Job ID로 Job을 호출해서 현재 상태를 가지고 와서 상태를 업데이트 해줌
+            #큐의 마지막 Job까지 모두 finished로 업데이트 되면 done=True가 되어서 while문을 탈출 후 프로그램 종료
             if job_status=="finished":
                 writer.writerow([entry[0],entry[1],job_status])
                 done=True
