@@ -36,6 +36,7 @@ if __name__ == '__main__':
     #input CSV의 한 entry는 (link, filename)으로 이루어져있음
     for entry in reader:
         #download_job_showbox에서 import한 download 함수,input CSV 파일에서 읽어들인 entry, job이 timeout할 때까지의 시간을 인자로 전달
+        #job_timeout의 단위는 초
         job=download_q.enqueue(download,entry,job_timeout=10800)
 
         #job_list에 생성된 Job의 ID와 큐에 추가되었다는 뜻의 메시지를 한 Tuple로 job_list에 추가
