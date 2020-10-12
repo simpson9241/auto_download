@@ -46,7 +46,7 @@ if __name__ == '__main__':
 
     #다운로드 큐에 들어있던 Job이 모두 끝나고 프로그램이 종료되도 된다는 신호를 주는 Flag 생성
     done=False
-
+    
     #프로그램이 종료될 때까지 큐의 진행상황을 output CSV 파일에 업데이트 시켜주는 코드
     #while 문은 60초 마다 반복
     while not done:
