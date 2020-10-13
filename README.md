@@ -48,6 +48,11 @@
 <pre><code>SAVE</code></pre>
 5. 서버 끄기
 <pre><code>SHUTDOWN</code></pre>
+6. Redis 큐 모니터링(콘솔)
+<pre><code>rq info</code></pre>
+7. Redis 큐 모니터링(웹)
+<pre><code>pip3 install rq-dashboard</code></pre>
+<pre><code>rq-dashboard</code></pre>
 
 
 Worker 준비
