@@ -3,7 +3,7 @@
 주요 기능
 -----
 * 다운로드 url, 파일명으로 구성되어 있는 csv 파일을 읽어 Worker들이 Redis Queue에서 Job을 가져와 자동으로 파일을 다운로드
-* 진행되고 있는 Job들의 진행상황을 Redis Server가 있는 컴퓨터에 csv로 저장
+* 진행되고 있는 Job들의 진행 상황을 Redis Server가 있는 컴퓨터에 csv로 저장
 * 모든 Job이 끝나면 Redis Server가 구동되고 있던 컴퓨터에서 돌아가고 있던 Server 프로그램이 종료
 
 
@@ -15,7 +15,9 @@
 3. redis-server 설치
 4. redis, rq 설치
 5. 또는 docker로 실행
-6. 다운로드 방식이나 url, csv 구조 등의 차이로 인해 그때그때 코드들을 조금씩 수정해야함
+6. 위의 설치는 install.sh를 실행해서 진행할 수도 있음
+<pre><code>sh install.sh</code></pre>
+7. 다운로드 방식이나 url, csv 구조 등의 차이로 인해 그때그때 코드들을 조금씩 수정해야함
 
 서버 준비
 -----
