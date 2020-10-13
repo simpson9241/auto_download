@@ -13,22 +13,27 @@ import time
 
 if __name__ == '__main__':
     #Input CSV 파일 열기
+    #Input CSV 파일 이름은 프로그램을 실행할 때 인자로 받음
+    #Example. python3 auto_download_redis.py showbox.csv
     input_csv=open(sys.argv[1],'r',encoding="utf-8")
 
     #input CSV 파일 이름 저장
     input=sys.argv[1]
 
     #input CSV 파일의 확장자 분리
+    #Example. input filename="showbox.csv" -> input="showbox"
     temp_input=input.split('.')
     input=temp_input[0]
 
     #output CSV 파일의 이름 생성
+    #Example. input filename="showbox.csv" -> output filename="showbox_output.csv"
     output_name=input+"_output"
 
     #input CSV 파일을 읽어들이는 변수 생성
     reader=csv.reader(input_csv)
 
     #생성된 Job 들의 Job ID와 Job Status를 저장해놓을 리스트 변수 생성
+    #하나의 Entry는 다음과 같이 구성됨 (Job_ID, Job_Status)
     job_list=[]
 
     #다운로드 큐 생성
@@ -46,7 +51,7 @@ if __name__ == '__main__':
 
     #다운로드 큐에 들어있던 Job이 모두 끝나고 프로그램이 종료되도 된다는 신호를 주는 Flag 생성
     done=False
-    
+
     #프로그램이 종료될 때까지 큐의 진행상황을 output CSV 파일에 업데이트 시켜주는 코드
     #while 문은 60초 마다 반복
     while not done:
@@ -75,6 +80,7 @@ if __name__ == '__main__':
                 writer.writerow([entry[0],entry[1],job_status])
                 done=True
             else:
+                #Job의 상태가 바뀐 경우 Job ID로 Job을 가지고 와서 현재 상태를 받아온 후 output CSV 파일과 job_list에 업데이트를 해준다.
                 job=Job.fetch(job_id,connection=Redis())
                 current_status=job.get_status()
                 writer.writerow([entry[0],entry[1],current_status])
